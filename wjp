@@ -1,0 +1,28 @@
+from collections import defaultdict
+
+jug1, jug2, target = 5, 3, 4
+
+visited = defaultdict(lambda: False)
+
+def helper(amt1, amt2):
+  if (amt1 == target and amt2 == 0) or (amt1 == 0 and amt2 == target):
+    print("got the target: ", amt1, amt2)
+    return True
+
+  if not visited[(amt1, amt2)]:
+    print(amt1, amt2)
+    visited[(amt1, amt2)] = True
+
+    return (
+    helper(0, amt2) or
+    helper(amt1, 0) or
+    helper(jug1, amt2) or
+    helper(amt1, jug2) or
+    helper(amt1 + min(amt2, jug1 - amt1), amt2 - min(amt2, jug1 - amt1)) or
+    helper(amt1 - min(amt1, jug2 - amt2), amt2 + min(amt1, jug2 - amt2))
+    )
+
+  else:
+    return False
+
+helper(0, 0)
