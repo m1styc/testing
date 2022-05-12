@@ -1,0 +1,35 @@
+from queue import Queue
+
+nodes = {
+    "0": ["1", "2", "3"],
+    "1": ["3"],
+    "2": ["4"],
+    "3": ["5", "6"],
+    "4": ["5", "7"],
+    "5": ["2"],
+    "6": [],
+    "7": [],
+}
+
+
+visited = {}
+res = []
+
+for node in nodes.keys():
+  visited[node] = False
+
+root = "0"
+visited[root] = True
+queue = Queue()
+queue.put(root)
+
+while not queue.empty():
+  top = queue.get()
+  res.append(top)
+
+  for nodeList in nodes[top]:
+    if not visited[nodeList]:
+      visited[nodeList] = True
+      queue.put(nodeList)
+
+print(res)
